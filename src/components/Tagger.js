@@ -17,14 +17,17 @@ class Tagger extends Component {
     handleClickSave = (data) => {
         const { datas } = this.state; 
         let addData = {
-            id: datas[datas.length - 1].id,
+            id: datas[datas.length - 1].id + 1,
             name: data.name,
             tags: data.tags,
         };
-        console.log(addData);
+        this.setState({
+            datas : datas.concat(addData)
+        });
     }
 
     render(){
+        console.log('state: ',this.state);
         return (
             <div>
               <DataCreate onClick={this.handleClickSave}/>

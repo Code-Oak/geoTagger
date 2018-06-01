@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TagCreate from './TagCreate';
 
 class DataCreate extends Component {
     constructor(props) {
@@ -19,19 +18,20 @@ class DataCreate extends Component {
     }
 
     handleClickSave = () => {
-        const { tagCount, tag, tags } = this.state;
+        const { name, tag, tagCount, tags } = this.state;
+        let data ={};
         if(tagCount) {
 
         } else {
-            let updateTags = tags.concat(tag);
-            this.setState({
-                tags: updateTags
-            });
+            data.name = name;
+            data.tags = [tag];
         }
-        let data = {
-            name: this.state.name,
-            tags: [tag],
-        }
+        this.setState({
+            name: '',
+            tag: '',
+            tagCount: 0,
+            tags: [],
+        });
         this.props.onClick(data);
     }
 
