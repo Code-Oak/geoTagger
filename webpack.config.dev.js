@@ -15,7 +15,15 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] }
+      { 
+        test: /\.js$/, 
+        exclude: /node_modules/, 
+        loader: 'babel-loader',
+        options: {
+          plugins: ['transform-class-properties']
+        }
+      }
     ]
+
   }
 }
