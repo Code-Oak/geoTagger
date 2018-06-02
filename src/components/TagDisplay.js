@@ -8,9 +8,11 @@ class TagDisplay extends Component {
         let options=[];
         let tags=[];
         for(let i = 0; i < datas.length; i++) {
-            for(let j = 0; j < datas[i].tags.length; j++) {
-                tags.push(datas[i].tags[j]);
-                // options.push(<option key={i+j} value={datas[i].tags[j]}> {datas[i].tags[j]} </option>);
+            if(datas[i].tags) {
+                for(let j = 0; j < datas[i].tags.length; j++) {
+                    tags.push(datas[i].tags[j]);
+                    // options.push(<option key={i+j} value={datas[i].tags[j]}> {datas[i].tags[j]} </option>);
+                }
             }
         }
         tags = tags.filter(function (value, index, self) { 
@@ -23,7 +25,7 @@ class TagDisplay extends Component {
         return (
             <div>
                 <select onChange={onChange}>
-                    <option value="" >-- select an tag --</option>
+                    <option value="" >-- select a tag --</option>
                     {options}
                 </select>
                 <TagItemList displayDatas={displayDatas} />

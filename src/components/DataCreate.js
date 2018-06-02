@@ -26,7 +26,7 @@ class DataCreate extends Component {
             for(let i = 0; i < tagsElems.length; i++) {
                 tags.push(tagsElems[i].value);
             }
-        }
+        } 
         data.name = name;
         data.tags = tags;
     
