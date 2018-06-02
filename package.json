@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shafayat05/geoTagger#readme",
   "dependencies": {
+    "@google/maps": "^0.4.6",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "isomorphic-fetch": "^2.2.1",

@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import TagItem from './TagItem';
+import './styles.css';
 
 class TagItemList extends Component {
     render(){
+        const { displayDatas } = this.props;
+        console.log('displayDatas: ', displayDatas);
+        let items = [];
+        for(let i = 0; i < displayDatas.length; i++) {
+            items.push(<li key={'item'+i}>Name: {displayDatas[i].name},   Tags: {displayDatas[i].tags.join(', ')}</li>);
+        }
         return (
             <div>
-                <TagItem />
+                <ul>
+                    {items}
+                </ul>
             </div>
         );
     }
