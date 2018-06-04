@@ -25,6 +25,7 @@ class DataCreate extends Component {
     }
 
     handleClickSave = () => {
+
         // console.log('inside hcs');
         // const { name, tags, tagFields } = this.state;
 

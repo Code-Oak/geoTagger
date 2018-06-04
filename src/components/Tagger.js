@@ -9,19 +9,19 @@ class Tagger extends Component {
         super(props);
         this.state = {
             datas : [{
-              id: 0,
               name: '',
-              tags: [],
+							tags: [],
+							googleInfo: []
 						}],
 						displayDatas : [{
 							name: '',
-							tags: []
+							tags: [],
+							googleInfo: []
 						}]
         };
 		}
 		
 		handleChange = (e) => {
-			console.log('value: ',e.target.value);
 			this.handleDisplay(e.target.value);
 		}
 
@@ -42,13 +42,11 @@ class Tagger extends Component {
     handleClickSave = (data) => {
         const { datas } = this.state; 
         let addData = {
-            id: datas[datas.length - 1].id + 1,
             name: data.name,
-            tags: data.tags,
+						tags: data.tags,
+						googleInfo: []
         };
-        // this.setState({
-        //     datas : datas.concat(addData)
-        // });
+				console.log('before fetch - add data: ', addData);
 				let that = this;
         fetch('/addLocation', {
             method: 'POST', // or 'PUT'
@@ -59,26 +57,31 @@ class Tagger extends Component {
           }).then(res => {
               return res.json()
             })
-          .catch(error => console.error('Error:', error))
-					.then(response => {
+          .catch(error => {
+						console.error('Error:', error)
 						that.setState({
 							datas : datas.concat(response)
 						});
-						console.log('Success:', response)
+					})
+					.then(response => {
+						console.log('after google response: ', response);
+						that.setState({
+							datas : datas.concat(response)
+						});
 					});
 		}
-		componentDidMount = () => {
+
+		componentWillMount = () => {
 			let that = this;
 			const { datas } = this.state; 
 			fetch('/getResults')
-			.then(function(response) {
-				return response.json();
+			.then(function(res) {
+				return res.json();
 			})
-			.then(function(myJson) {
+			.then(function(response) {
 				that.setState({
-					datas : datas.concat(myJson)
+					datas : datas.concat(response)
 				});
-				console.log('myJson: ',myJson);
 			});
 		}
 
