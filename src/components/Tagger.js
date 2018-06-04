@@ -25,7 +25,7 @@ class Tagger extends Component {
 			this.handleDisplay(e.target.value);
 		}
 
-		handleDisplay = (value) => {
+		handleDisplay = (value) => { ///// This will become a new post request to the server
 			let selectedDatas = this.state.datas.filter( (data) => {
 				for(let i = 0; i < data.tags.length; i++) {
 					if(data.tags[i] === value) {

@@ -5,61 +5,79 @@ class DataCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            tag: '',
-            tagCount: 0
+            // name: '',
+            // tags: [],
+            tagFields: 1
         };
     }
 
-    handleChange = (e) => {
+    locationHandleChange = (e) => {
         let nextState = {};
         nextState[e.target.name] = e.target.value;
         this.setState(nextState);
     }
 
+    tagHandleChange = (e) => {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        console.log(nextState);
+        this.setState(nextState);
+    }
+
     handleClickSave = () => {
-        const { name, tag, tagCount } = this.state;
-        let data = {};
-        let tags = [tag];
-        if(tagCount) {
-            let tagsElems = document.getElementsByClassName('tags');
-            for(let i = 0; i < tagsElems.length; i++) {
-                tags.push(tagsElems[i].value);
-            }
+        // console.log('inside hcs');
+        // const { name, tags, tagFields } = this.state;
+
+        /// Get values from forms
+        let tagsElems = document.getElementsByClassName('tags');
+        let locationElems = document.getElementsByClassName('name');
+        let updatedTags = [];
+        for(let i = 0; i < tagsElems.length; i++) {
+            updatedTags.push(tagsElems[i].value);
         }
-        data.name = name;
-        data.tags = tags;
-    
-        this.setState({
-            name: '',
-            tag: '',
-            tagCount: 0
-        });
+        let data = {};
+        console.log('Location elems:', locationElems[0].value);
+
+        //// Create data to send
+        data.name = locationElems[0].value;
+        data.tags = updatedTags;
+
+        //// Refresh forms
+        for (let tag of tagsElems) {
+            console.log('Tag elements values:', tag.value);
+            tag.value = '';
+        };
+        locationElems[0].value = '';
+
+        // this.setState({
+        //     name: '',
+        //         tags: [],
+        //         tagFields: 1
+        // });
+            
         this.props.onClick(data);
+        // }
     }
 
     handleClickPlus = () => {
-        let updateTagCount = this.state.tagCount+1;
+        let updatedTagFields = this.state.tagFields + 1;
         this.setState({
-            tagCount: updateTagCount
+            tagFields: updatedTagFields
         });
     }
     
     render(){
-        const { tagCount } = this.state;
-        let moreTags = [];
-        if(tagCount) {
-            for(let i = 0; i < tagCount; i++) {
-                moreTags.push(<input className="tags" type="text" name = {"tag"+i+1} placeholder="tag" key={"tag"+i+1}/>);
-            }
+        const { tagFields } = this.state;
+        let tagsDisplay = [];
+        for(let i = 0; i < tagFields; i++) {
+            tagsDisplay.push(<input className="tags" type="text" name = {"tag"+i+1} placeholder="tag" key={"tag"+i+1} onChange={this.tagHandleChange}/>);
         }
         return (
             <div>
-                <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange} />
+                <input type="text" className ="name" name="name" placeholder="name" onChange={this.locationHandleChange} />
                 <br />
-                <input className="tag" type="text" name="tag" placeholder="tag" value={this.state.tag} onChange={this.handleChange} />
                 <button onClick={this.handleClickPlus}>+</button>
-                {moreTags}
+                {tagsDisplay}
                 <br />
                 <button onClick={this.handleClickSave}>SAVE</button>
             </div>
